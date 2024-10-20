@@ -7,7 +7,6 @@ public class FruitSpawner : MonoBehaviour
     public GameObject[] fruits;
     public GameObject bombPrefab;
     public Transform spawnPoint;
-    public int numberOfFruits = 5;
     public float destroyHeight = -2.0f;
     public float minLaunchForce = 10.0f;
     public float maxLaunchForce = 15.0f;
@@ -55,11 +54,9 @@ public class FruitSpawner : MonoBehaviour
                 yield break; // Termina el coroutine
             }
 
-            if (activeFruits.Count < numberOfFruits)
-            {
-                yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
-                SpawnFruit();
-            }
+            // Generar frutas independientemente del conteo anterior
+            yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
+            SpawnFruit();
 
             // Generar la bomba si no hay una activa y el juego no ha terminado
             if (activeBomb == null && !(spriteManager != null && spriteManager.IsGameOver()))
