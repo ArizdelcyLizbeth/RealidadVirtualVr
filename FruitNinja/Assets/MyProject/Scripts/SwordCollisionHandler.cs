@@ -31,7 +31,8 @@ public class SwordCollisionHandler : MonoBehaviour
             // Llamar al método RemoveSprite del SpriteManager
             if (spriteManager != null)
             {
-                spriteManager.RemoveSprite();
+                spriteManager.RemoveSprite(); // Desactivar sprite
+                spriteManager.IncrementBombCount(); // Incrementar contador de bombas
             }
             else
             {
@@ -40,4 +41,3 @@ public class SwordCollisionHandler : MonoBehaviour
         }
     }
 }
-

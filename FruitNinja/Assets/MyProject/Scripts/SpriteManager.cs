@@ -3,36 +3,50 @@ using UnityEngine;
 
 public class SpriteManager : MonoBehaviour
 {
-    // Lista para almacenar los sprites que se deben ocultar
     public List<GameObject> sprites = new List<GameObject>();
-
     private int spriteIndex = 0;
+    public bool isGameOver = false; // Para rastrear si el juego ha terminado
+    private int bombCount = 0; // Contador de bombas tocadas
 
     void Start()
     {
-        // Inicializar la lista con los hijos del Panel (asumiendo que los sprites son hijos directos del Panel)
         foreach (Transform child in transform)
         {
             sprites.Add(child.gameObject);
         }
     }
 
-    // Método que es llamado cuando se toca una bomba
     public void RemoveSprite()
     {
         if (spriteIndex < sprites.Count)
         {
-            // Ocultar el siguiente sprite
             sprites[spriteIndex].SetActive(false);
             spriteIndex++;
 
             // Si se han ocultado todos los sprites, detener el juego
             if (spriteIndex == sprites.Count)
             {
-                // Lógica para detener el juego
                 Debug.Log("¡Juego terminado! No hay más sprites visibles.");
-                // Aquí puedes añadir lógica adicional para finalizar el juego, como desactivar el spawner o mostrar un menú de fin de juego.
             }
         }
     }
+
+    public void IncrementBombCount()
+    {
+        bombCount++;
+        Debug.Log("Bombas tocadas: " + bombCount);
+
+        // Verificar si se han tocado 3 bombas
+        if (bombCount >= 3)
+        {
+            isGameOver = true; // Marcar el juego como terminado
+            Debug.Log("¡Juego terminado! Se han tocado 3 bombas.");
+        }
+    }
+
+    public bool IsGameOver()
+    {
+        return isGameOver;
+    }
 }
+
