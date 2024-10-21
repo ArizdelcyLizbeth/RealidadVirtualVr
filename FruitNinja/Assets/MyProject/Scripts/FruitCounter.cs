@@ -10,6 +10,10 @@ public class FruitCounter : MonoBehaviour
     void Start()
     {
         // Asegúrate de que el texto esté inicializado
+        if (textMeshPro == null)
+        {
+            Debug.LogError("TextMeshPro no está asignado en FruitCounter.");
+        }
         UpdateFruitCountText();
     }
 
@@ -17,13 +21,21 @@ public class FruitCounter : MonoBehaviour
     public void IncrementFruitCount()
     {
         fruitCutCount++;
+        Debug.Log("Contador de frutas cortadas: " + fruitCutCount); // Mensaje de depuración
         UpdateFruitCountText();
     }
 
     // Actualizar el texto del contador
     private void UpdateFruitCountText()
     {
-        textMeshPro.text = "Frutas Cortadas: " + fruitCutCount;
+        if (textMeshPro != null)
+        {
+            textMeshPro.text = "Frutas Cortadas: " + fruitCutCount;
+            Debug.Log("Texto actualizado: " + textMeshPro.text); // Mensaje de depuración
+        }
+        else
+        {
+            Debug.LogError("TextMeshPro no está asignado, no se puede actualizar el texto.");
+        }
     }
 }
-

@@ -7,12 +7,12 @@ public class SwordCollisionHandler : MonoBehaviour
 
     void Start()
     {
-        // Buscar automáticamente el SpriteManager en el Panel
+        // Buscar automáticamente el SpriteManager en el objeto Panel
         spriteManager = GameObject.Find("Panel").GetComponent<SpriteManager>();
-
         // Buscar el FruitCounter en el objeto frutasCortadas
         fruitCounter = GameObject.Find("frutasCortadas").GetComponent<FruitCounter>();
 
+        // Verificar si las referencias se han encontrado
         if (spriteManager == null)
         {
             Debug.LogError("No se encontró el SpriteManager en el Panel.");
@@ -33,10 +33,7 @@ public class SwordCollisionHandler : MonoBehaviour
             Debug.Log("¡Fruta destruida!");
 
             // Incrementar el contador de frutas cortadas
-            if (fruitCounter != null)
-            {
-                fruitCounter.IncrementFruitCount();
-            }
+            fruitCounter?.IncrementFruitCount();
         }
         else if (other.CompareTag("Bomb"))
         {
@@ -48,10 +45,6 @@ public class SwordCollisionHandler : MonoBehaviour
             {
                 spriteManager.RemoveSprite(); // Desactivar sprite
                 spriteManager.IncrementBombCount(); // Incrementar contador de bombas
-            }
-            else
-            {
-                Debug.LogError("Referencia a SpriteManager no asignada en SwordCollisionHandler.");
             }
         }
     }
