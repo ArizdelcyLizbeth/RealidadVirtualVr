@@ -4,6 +4,7 @@ public class SwordCollisionHandler : MonoBehaviour
 {
     private SpriteManager spriteManager;
     private FruitCounter fruitCounter; // Nueva referencia para el contador de frutas
+    private SoundEffectManager soundEffectManager; // Nueva referencia para el gestor de efectos de sonido
 
     void Start()
     {
@@ -13,6 +14,9 @@ public class SwordCollisionHandler : MonoBehaviour
         // Buscar el FruitCounter en el objeto frutasCortadas
         fruitCounter = GameObject.Find("frutasCortadas").GetComponent<FruitCounter>();
 
+        // Buscar el SoundEffectManager
+        soundEffectManager = GameObject.FindObjectOfType<SoundEffectManager>();
+
         if (spriteManager == null)
         {
             Debug.LogError("No se encontró el SpriteManager en el Panel.");
@@ -21,6 +25,11 @@ public class SwordCollisionHandler : MonoBehaviour
         if (fruitCounter == null)
         {
             Debug.LogError("No se encontró el FruitCounter en frutasCortadas.");
+        }
+
+        if (soundEffectManager == null)
+        {
+            Debug.LogError("No se encontró el SoundEffectManager.");
         }
     }
 
@@ -36,6 +45,12 @@ public class SwordCollisionHandler : MonoBehaviour
             if (fruitCounter != null)
             {
                 fruitCounter.IncrementFruitCount();
+            }
+
+            // Reproducir el sonido de corte
+            if (soundEffectManager != null)
+            {
+                soundEffectManager.PlayCutSound();
             }
         }
         else if (other.CompareTag("Bomb"))
