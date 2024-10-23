@@ -2473,7 +2473,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutSound: {fileID: 8300000, guid: 88f40d09e980ce2448b114b79dea80e7, type: 3}
+  bombSound: {fileID: 8300000, guid: 3959422cd0940af4ba91c8552be9d69e, type: 3}
   cutSoundVolume: 1
+  bombSoundVolume: 1
 --- !u!4 &1604850460
 Transform:
   m_ObjectHideFlags: 0
