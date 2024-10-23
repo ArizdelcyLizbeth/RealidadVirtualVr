@@ -1,42 +1,51 @@
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Esta clase gestiona la logica de mostrar un mensaje de "Fin de Juego" en pantalla
+/// cuando el estado del juego indica que ha terminado.
+/// </summary>
 public class GameOverManager : MonoBehaviour
 {
-    // Referencia al objeto TextMeshPro para mostrar el mensaje de fin de juego
     public TextMeshProUGUI finDeJuegoText;
 
-    // Referencia al SpriteManager
     private SpriteManager spriteManager;
 
+    /// <summary>
+    /// El metodo Start se ejecuta al inicio del juego. Inicializa el SpriteManager y
+    /// oculta el texto de "Fin de Juego" al comenzar.
+    /// </summary>
     void Start()
     {
-        // Buscar el SpriteManager en el Panel
         spriteManager = GameObject.Find("Panel").GetComponent<SpriteManager>();
 
-        // Asegúrate de que el texto esté desactivado al inicio
         if (finDeJuegoText != null)
         {
             finDeJuegoText.gameObject.SetActive(false);
         }
     }
 
+    /// <summary>
+    /// En cada frame, este metodo verifica si el juego ha terminado. Si es asi,
+    /// se muestra el texto de "Fin de Juego".
+    /// </summary>
     void Update()
     {
-        // Verificar si el juego ha terminado
         if (spriteManager != null && spriteManager.IsGameOver())
         {
             ShowGameOverText();
         }
     }
 
+    /// <summary>
+    /// Activa y muestra el texto de "Fin de Juego" en la interfaz de usuario.
+    /// </summary>
     private void ShowGameOverText()
     {
-        // Activar el texto de fin de juego
         if (finDeJuegoText != null)
         {
             finDeJuegoText.gameObject.SetActive(true);
-            finDeJuegoText.text = "Fin de Juego"; // Cambiar el texto si lo deseas
+            finDeJuegoText.text = "Fin de Juego"; 
         }
     }
 }

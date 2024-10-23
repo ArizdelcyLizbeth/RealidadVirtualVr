@@ -1,23 +1,29 @@
 using UnityEngine;
 
+/// <summary>
+/// Esta clase se encarga de instanciar y adjuntar un prefab de una espada llamada "Sushui" 
+/// al controlador derecho, asegurando que la espada este correctamente posicionada y rotada.
+/// </summary>
 public class AttachSwordToRightHand : MonoBehaviour
 {
-    // Prefab de la espada Sushui
+    // Prefab de la espada Sushui que sera instanciada y adjuntada al controlador derecho.
     public GameObject sushuiPrefab;
 
-    // Referencia al controlador derecho
+    /// Transform del controlador derecho al cual se adjuntara la espada.
     public Transform rightController;
 
+    // Instancia del objeto Sushui una vez que haya sido creado
     private GameObject sushuiInstance;
 
+    /// <summary>
+    /// Metodo Start es llamado al inicio del juego. 
+    /// </summary>
     void Start()
     {
         if (rightController != null && sushuiPrefab != null)
         {
-            // Instanciar el prefab Sushui y hacerlo hijo del controlador derecho
             sushuiInstance = Instantiate(sushuiPrefab, rightController);
 
-            // Asegúrate de que esté bien posicionado y rotado localmente
             sushuiInstance.transform.localPosition = Vector3.zero;
             sushuiInstance.transform.localRotation = Quaternion.identity;
 

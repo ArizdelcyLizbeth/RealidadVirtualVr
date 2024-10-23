@@ -1,20 +1,25 @@
 using UnityEngine;
 
+/// <summary>
+/// Esta clase maneja las colisiones de la espada con frutas y bombas.
+/// Al cortar una fruta, aumenta el contador de frutas y reproduce un efecto de sonido.
+/// Al tocar una bomba, se actualiza el estado del juego y se elimina un sprite.
+/// </summary>
 public class SwordCollisionHandler : MonoBehaviour
 {
     private SpriteManager spriteManager;
-    private FruitCounter fruitCounter; // Nueva referencia para el contador de frutas
-    private SoundEffectManager soundEffectManager; // Nueva referencia para el gestor de efectos de sonido
+    private FruitCounter fruitCounter; 
+    private SoundEffectManager soundEffectManager; 
 
+    /// <summary>
+    /// Inicializa las referencias a SpriteManager, FruitCounter y SoundEffectManager.
+    /// </summary>
     void Start()
     {
-        // Buscar automáticamente el SpriteManager en el Panel
         spriteManager = GameObject.Find("Panel").GetComponent<SpriteManager>();
 
-        // Buscar el FruitCounter en el objeto frutasCortadas
         fruitCounter = GameObject.Find("frutasCortadas").GetComponent<FruitCounter>();
 
-        // Buscar el SoundEffectManager
         soundEffectManager = GameObject.FindObjectOfType<SoundEffectManager>();
 
         if (spriteManager == null)
@@ -33,21 +38,22 @@ public class SwordCollisionHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Detecta cuando la espada entra en contacto con frutas o bombas y maneja las interacciones
+    /// </summary>
+    /// <param name="other">El collider del objeto con el que se ha chocado.</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Fruit"))
         {
-            // Destruir la fruta
             Destroy(other.gameObject);
             Debug.Log("¡Fruta destruida!");
 
-            // Incrementar el contador de frutas cortadas
             if (fruitCounter != null)
             {
                 fruitCounter.IncrementFruitCount();
             }
 
-            // Reproducir el sonido de corte
             if (soundEffectManager != null)
             {
                 soundEffectManager.PlayCutSound();
@@ -55,14 +61,12 @@ public class SwordCollisionHandler : MonoBehaviour
         }
         else if (other.CompareTag("Bomb"))
         {
-            // Imprimir mensaje en la consola
             Debug.Log("Se termina el juego. ¡Has tocado una bomba!");
 
-            // Llamar al método RemoveSprite del SpriteManager
             if (spriteManager != null)
             {
-                spriteManager.RemoveSprite(); // Desactivar sprite
-                spriteManager.IncrementBombCount(); // Incrementar contador de bombas
+                spriteManager.RemoveSprite(); 
+                spriteManager.IncrementBombCount(); 
             }
             else
             {

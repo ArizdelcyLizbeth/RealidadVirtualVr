@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Esta clase se encarga de generar frutas y bombas en posiciones aleatorias,
+/// lanzandolas hacia arriba con fuerzas variables y eliminandolas si caen por debajo de una altura especifica.
+/// </summary>
 public class FruitSpawner : MonoBehaviour
 {
     public GameObject[] fruits;
@@ -19,13 +23,20 @@ public class FruitSpawner : MonoBehaviour
     private GameObject activeBomb = null;
     private SpriteManager spriteManager;
 
+    /// <summary>
+    /// El metodo Start se llama al inicio del juego. Aqui se inicializa el SpriteManager y se comienza
+    /// la rutina de generacion de frutas y bombas.
+    /// </summary>
     void Start()
     {
-        // Buscar el SpriteManager
         spriteManager = GameObject.Find("Panel").GetComponent<SpriteManager>();
         StartCoroutine(SpawnFruits());
     }
 
+    /// <summary>
+    /// En cada frame, este metodo revisa si hay frutas o bombas que han caido por debajo de la altura limite,
+    /// y las destruye si es necesario.
+    /// </summary>
     void Update()
     {
         for (int i = activeFruits.Count - 1; i >= 0; i--)
@@ -44,21 +55,22 @@ public class FruitSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine que controla la generacion periodica de frutas y bombas.
+    /// Se detiene cuando el juego ha terminado.
+    /// </summary>
     IEnumerator SpawnFruits()
     {
         while (true)
         {
-            // Detener la generación si el juego ha terminado
             if (spriteManager != null && spriteManager.IsGameOver())
             {
-                yield break; // Termina el coroutine
+                yield break; 
             }
 
-            // Generar frutas independientemente del conteo anterior
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
             SpawnFruit();
 
-            // Generar la bomba si no hay una activa y el juego no ha terminado
             if (activeBomb == null && !(spriteManager != null && spriteManager.IsGameOver()))
             {
                 yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
@@ -66,11 +78,14 @@ public class FruitSpawner : MonoBehaviour
             }
             else
             {
-                yield return null; // Esperar al siguiente frame
+                yield return null; 
             }
         }
     }
 
+    /// <summary>
+    /// Genera una fruta aleatoria de la lista y la lanza desde el punto de generacion.
+    /// </summary>
     void SpawnFruit()
     {
         GameObject fruit = fruits[Random.Range(0, fruits.Length)];
@@ -97,7 +112,10 @@ public class FruitSpawner : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Genera una bomba y la lanza desde el punto de generacion.
+    /// Solo puede haber una bomba activa a la vez.
+    /// </summary>
     void SpawnBomb()
     {
         Vector3 spawnPosition = spawnPoint.position;
